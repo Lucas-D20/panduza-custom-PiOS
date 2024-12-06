@@ -1,0 +1,14 @@
+export DIST_NAME=panduza
+export DIST_VERSION=0.0.1
+
+# rpi-imager json generator settings
+export RPI_IMAGER_NAME="${DIST_NAME}"
+export RPI_IMAGER_DESCRIPTION="A raspberrypi distro built with CustomPiOS"
+export RPI_IMAGER_WEBSITE="https://github.com/guysoft/CustomPiOS"
+export RPI_IMAGER_ICON="https://raw.githubusercontent.com/guysoft/CustomPiOS/devel/media/rpi-imager-CustomPiOS.png"
+
+export MODULES="base(network,panduza)"
+
+
+export BASE_IMAGE_ENLARGEROOT=4000
+export BASE_IMAGE_RESIZEROOT=200

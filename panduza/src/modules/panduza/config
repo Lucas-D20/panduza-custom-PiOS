@@ -1,0 +1,2 @@
+[ -n "$PANDUZA_REPO_SHIP" ] || PANDUZA_REPO_SHIP=https://github.com/Panduza/panduza-rust-platform.git
+[ -n "$PANDUZA_REPO_BRANCH" ] || PANDUZA_REPO_BRANCH=0.5.1

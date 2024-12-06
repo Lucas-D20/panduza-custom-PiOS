@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Panduza installer
+# This script installs Rust and the Panduza Rust Platform on the Raspberry
+# Written by Lucas Giese
+# GPL V3
+########
+
+
+# Source error handling, leave this in place
+set -x
+set -e
+
+source /common.sh
+install_cleanup_trap
+
+unpack /filesystem/home/pi /home/"${BASE_USER}" "${BASE_USER}"
+unpack /filesystem/home/root /root root
+unpack /filesystem/boot /boot
+
+# Install Rust
+echo "Installing Rust Programming Language..."
+
+# Set environement variables to choose where to install Rust
+export CARGO_HOME=/root/.cargo
+export RUSTUP_HOME=/root/.rustup
+
+# Make sure the change is permanent
+echo 'export CARGO_HOME=/root/.cargo' >> /home/pi/.bashrc
+echo 'export RUSTUP_HOME=/root/.rustup' >> /home/pi/.bashrc
+
+source /home/pi/.bashrc
+
+echo $CARGO_HOME
+echo $RUSTUP_HOME
+
+# Default Rust installation method at the chosen location
+RUSTUP_HOME=$RUSTUP_HOME CARGO_HOME=$CARGO_HOME bash -c 'curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
+
+# Add Rust to the system PATH
+echo 'export PATH="/root/.cargo/bin:$PATH"' >> /etc/profile.d/rust.sh
+
+source "/root/.cargo/env"
+
+rustc --version
+cargo --version
+
+echo "Rust installation complete!"
+
+
+# Install git
+sudo apt install git -y
+
+# Install Panduza Rust Platform
+echo "Installing Panduza Rust Platform..."
+
+gitclone PANDUZA_REPO panduza-rust-platform
+echo "Panduza Rust Platform installation complete!"
+
+
+# Unpack root at the end, so files are modified before
+unpack /filesystem/root /
